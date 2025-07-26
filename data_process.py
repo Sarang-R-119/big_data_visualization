@@ -30,15 +30,22 @@ def feed_csv(file_path = ''):
     except Exception:
         raise 
 
-def add_plot_properties(title, y_axis, x_axis):
+# def add_plot_properties(title, y_axis, x_axis):
     
 
 def plot(df : pd.DataFrame, timestamp_col_name = "time_s"):
     
     # Convert date column
-    df["Date"] = pd.to_datetime(df[timestamp_col_name])
+    df["Timestamp"] = pd.to_datetime(df[timestamp_col_name])
 
     # Line plot
-    fig = px.line(df, x="Date", y="Value", title="Simple Line Chart")
-    fig.show()
+    for col in df.columns:
+        if col != timestamp_col_name:
+            fig = px.line(df, x=timestamp_col_name, y=col, title="Simple Line Chart")
+    
+            fig.show()
 
+
+    # fig = px.line(df, x=timestamp_col_name, y= df.columns,title="Simple Line Chart")
+
+    # fig.show()
