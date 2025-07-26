@@ -39,13 +39,23 @@ def plot(df : pd.DataFrame, timestamp_col_name = "time_s"):
     df["Timestamp"] = pd.to_datetime(df[timestamp_col_name])
 
     # Line plot
+    # for col in df.columns:
+    #     if col != timestamp_col_name:
+    #         fig = px.line(df, x=timestamp_col_name, y=col, title="Simple Line Chart")
+    
+    #         fig.show()
+
+    fig = go.Figure()
     for col in df.columns:
         if col != timestamp_col_name:
-            fig = px.line(df, x=timestamp_col_name, y=col, title="Simple Line Chart")
+            fig.add_trace(go.Line(x=df[timestamp_col_name], y=df[col], mode='lines', name=col))
+
+    fig.update_layout(title='Time Series Data',
+                      xaxis_title='Date-Time',
+                      yaxis_title='Value')
     
-            fig.show()
 
 
     # fig = px.line(df, x=timestamp_col_name, y= df.columns,title="Simple Line Chart")
 
-    # fig.show()
+    fig.show()
